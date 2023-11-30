@@ -55,13 +55,51 @@
             color: #007BFF;
             text-decoration: none;
         }
+
+        .nombre-input {
+            margin-top: 20px;
+        }
+
+        .nombre-input input {
+            margin-right: 10px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="success-message">¡Compra Exitosa!</div>
         <div class="animation-container"></div>
-        <div class="contact-info">Para más pedidos, escriba o llame al <a href="tel:+51910781062" class="contact-link">910781062</a></div>
+        <div class="contact-info">Asegure su compra y Escribanos , ponga su nombre alli abajo o llamenos al siguiente numero <a href="tel:+51910781062" class="contact-link">910781062</a></div>
+        <div class="nombre-input">
+            <label for="nombre">Por favor, ingrese su nombre:</label>
+            <input type="text" id="nombre" placeholder="Nombre">
+            <button onclick="redirigirWhatsApp()">Enviar</button>
+        </div>
     </div>
+
+    <script>
+       function redirigirWhatsApp() {
+    var nombreCliente = document.getElementById('nombre').value;
+
+    // Obtener información de la compra desde localStorage
+    var productosComprados = localStorage.getItem('productosComprados') || "";
+    var precios = localStorage.getItem('precios') || "";
+    var precioTotal = localStorage.getItem('precioTotal') || "0.00";
+
+    // Validar que haya productos antes de redirigir
+    if (productosComprados.trim() === "") {
+        alert("No hay productos en la compra.");
+        return;
+    }
+
+    // Crear mensaje personalizado
+    var mensaje = `Hola, soy ${nombreCliente}. He realizado una compra de los siguientes productos:\n\n${productosComprados}\nPrecios:\n${precios}\nTotal: S/${precioTotal}`;
+
+    // Redirige a wa.me con el mensaje predefinido
+    var numeroWhatsApp = '+51910781062';
+    var urlAPIWhatsApp = 'https://wa.me/' + numeroWhatsApp + '?text=' + encodeURIComponent(mensaje);
+    window.location.href = urlAPIWhatsApp;
+}
+    </script>
 </body>
 </html>
