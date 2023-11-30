@@ -17,13 +17,15 @@ function ready(){
         button.addEventListener('click',eliminarItemCarrito);
     }
 
-    //Agrego funcionalidad al boton sumar cantidad
-    var botonesSumarCantidad = document.getElementsByClassName('sumar-cantidad');
-    for(var i=0;i<botonesSumarCantidad.length; i++){
-        var button = botonesSumarCantidad[i];
-        button.addEventListener('click',sumarCantidad);
+    function sumarCantidad(event) {
+        var buttonClicked = event.target;
+        var selector = buttonClicked.parentElement;
+        var cantidadActual = parseInt(selector.getElementsByClassName('carrito-item-cantidad')[0].value) || 0;
+        cantidadActual = Math.max(0, cantidadActual + 1);
+        selector.getElementsByClassName('carrito-item-cantidad')[0].value = cantidadActual;
+        actualizarTotalCarrito();
     }
-
+    
      //Agrego funcionalidad al buton restar cantidad
     var botonesRestarCantidad = document.getElementsByClassName('restar-cantidad');
     for(var i=0;i<botonesRestarCantidad.length; i++){
@@ -41,11 +43,40 @@ function ready(){
     //Agregamos funcionalidad al botón comprar
     document.getElementsByClassName('btn-pagar')[0].addEventListener('click',pagarClicked)
 }
-//Eliminamos todos los elementos del carrito y lo ocultamos
-function pagarClicked() {
-    alert("Gracias por la compra");
+function obtenerInformacionCompra() {
+    var carritoContenedor = document.getElementsByClassName('carrito')[0];
+    var carritoItems = carritoContenedor.getElementsByClassName('carrito-item');
+    var productosComprados = "";
+    var precios = "";
+    var precioTotal = 0;
 
-    // Elimino todos los elementos del carrito
+    for (var i = 0; i < carritoItems.length; i++) {
+        var item = carritoItems[i];
+        var titulo = item.getElementsByClassName('carrito-item-titulo')[0].innerText;
+        var precioElemento = item.getElementsByClassName('carrito-item-precio')[0];
+        var precioTexto = precioElemento.innerText.replace('S/', '').replace(',', ''); // Eliminar 'S/' y comas
+        var precio = parseFloat(precioTexto);
+        var cantidadItem = item.getElementsByClassName('carrito-item-cantidad')[0];
+        var cantidad = parseInt(cantidadItem.value);
+
+        productosComprados += `${cantidad} x ${titulo}\n`;
+        precios += `S/${precio.toLocaleString("es")} x ${cantidad}\n`;
+        precioTotal += precio * cantidad;
+    }
+
+    return { productosComprados, precios, precioTotal: precioTotal.toLocaleString("es") };
+}
+
+function pagarClicked() {
+    // Obtener información de la compra
+    var { productosComprados, precios, precioTotal } = obtenerInformacionCompra();
+
+    // Almacenar información en el localStorage
+    localStorage.setItem('productosComprados', productosComprados);
+    localStorage.setItem('precios', precios);
+    localStorage.setItem('precioTotal', precioTotal);
+
+    // Eliminar todos los elementos del carrito
     var carritoItems = document.getElementsByClassName('carrito-items')[0];
     while (carritoItems.hasChildNodes()) {
         carritoItems.removeChild(carritoItems.firstChild);
@@ -54,9 +85,17 @@ function pagarClicked() {
     actualizarTotalCarrito();
     ocultarCarrito();
 
-    // Redirige a la página "compra.html" después de completar la compra
+    // Redirige a la página "compra.html"
     window.location.href = "compra.html";
 }
+
+
+
+total = Math.round(total * 100) / 100;
+var totalCarritoElement = document.getElementsByClassName('carrito-precio-total')[0];
+totalCarritoElement.innerText = 'S/' + total.toLocaleString("es") + ",00";
+
+
 //Funciòn que controla el boton clickeado de agregar al carrito
 function agregarAlCarritoClicked(event){
     var button = event.target;
@@ -178,30 +217,36 @@ function ocultarCarrito(){
         items.style.width = '100%';
     }
 }
-//Actualizamos el total de Carrito
+// Actualizamos el total de Carrito
 function actualizarTotalCarrito() {
     var carritoContenedor = document.getElementsByClassName('carrito')[0];
     var carritoItems = carritoContenedor.getElementsByClassName('carrito-item');
     var total = 0;
+    var productosComprados = "";
+    var precios = "";
 
     for (var i = 0; i < carritoItems.length; i++) {
         var item = carritoItems[i];
+        var titulo = item.getElementsByClassName('carrito-item-titulo')[0].innerText;
         var precioElemento = item.getElementsByClassName('carrito-item-precio')[0];
         var precioTexto = precioElemento.innerText.replace('S/', '').replace(',', ''); // Eliminar 'S/' y comas
         var precio = parseFloat(precioTexto);
-
         var cantidadItem = item.getElementsByClassName('carrito-item-cantidad')[0];
         var cantidad = parseInt(cantidadItem.value);
 
         total += precio * cantidad;
+
+        productosComprados += `${cantidad} x ${titulo}\n`;
+        precios += `S/${precio.toLocaleString("es")} x ${cantidad}\n`;
     }
 
-    total = Math.round(total * 100) / 100;
+    // Actualizar el total en el elemento correspondiente
     var totalCarritoElement = document.getElementsByClassName('carrito-precio-total')[0];
+    total = Math.round(total * 100) / 100; // Redondear a dos decimales
     totalCarritoElement.innerText = 'S/' + total.toLocaleString("es") + ",00";
+
+    // Resto del código...
 }
-
-
 
 
 
