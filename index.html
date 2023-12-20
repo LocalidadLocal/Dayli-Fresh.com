@@ -8,6 +8,45 @@
     <link rel="stylesheet" href="estilo.css">
     <script src="app.js" async></script>
     <title>Tienda de Frutas Y Verduras | </title>
+    <style>/* Agrega estilos para resaltar el título */
+header h1 {
+    font-size: 45px; /* Tamaño más grande */
+    color: #28a745; /* Color verde para resaltar */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Sombra suave para destacar el texto */
+}
+
+/* Agrega un efecto de desplazamiento suave para las transiciones */
+.container, .carrito {
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+/* Resalta el carrito cuando se pasa el mouse sobre él */
+.carrito:hover, .container:hover {
+    box-shadow: 0 0 30px rgba(0, 128, 0, 0.2); /* Sombra más grande en verde */
+    transform: scale(1.02); /* Efecto de escala para dar un aspecto más 3D */
+}
+
+/* Ajusta los estilos del botón de pagar */
+.carrito-total .btn-pagar {
+    display: block;
+    width: 100%;
+    border: none;
+    background: #28a745; /* Fondo verde */
+    color: #fff;
+    border-radius: 5px;
+    font-size: 18px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.carrito-total .btn-pagar:hover {
+    background-color: #218838; /* Color verde oscuro al pasar el mouse */
+}
+</style>
 </head>
 <body>
     <header>
