@@ -7,7 +7,7 @@
     <title>Compra Exitosa</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             background-color: #f4f4f4;
             margin: 0;
             padding: 0;
@@ -15,20 +15,29 @@
             align-items: center;
             justify-content: center;
             height: 100vh;
+            text-align: center;
+            color: #333; /* Color de texto principal */
         }
 
         .container {
-            text-align: center;
-            padding: 20px;
+            padding: 40px;
             background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            max-width: 400px;
+            width: 100%;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .container:hover {
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
         }
 
         .success-message {
             color: #4CAF50;
-            font-size: 24px;
+            font-size: 32px;
             margin-bottom: 20px;
+            font-weight: bold;
         }
 
         .animation-container {
@@ -38,6 +47,7 @@
             border-radius: 50%;
             display: inline-block;
             animation: pulse 1s infinite;
+            margin: 20px auto;
         }
 
         @keyframes pulse {
@@ -49,19 +59,48 @@
         .contact-info {
             font-size: 18px;
             margin-top: 20px;
+            color: #555; /* Color de texto secundario */
         }
 
         .contact-link {
             color: #007BFF;
             text-decoration: none;
+            font-weight: bold;
         }
 
         .nombre-input {
             margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nombre-input label {
+            font-size: 16px;
+            margin-right: 10px;
         }
 
         .nombre-input input {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
             margin-right: 10px;
+        }
+
+        .nombre-input button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .nombre-input button:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
@@ -69,7 +108,7 @@
     <div class="container">
         <div class="success-message">¡Compra Exitosa!</div>
         <div class="animation-container"></div>
-        <div class="contact-info">Asegure su compra y Escribanos , ponga su nombre alli abajo o llamenos al siguiente numero <a href="tel:+51927904737" class="contact-link">910781062</a></div>
+        <div class="contact-info">Asegure su compra y contáctenos. Ponga su nombre abajo o llámenos al siguiente número <a href="tel:+51927904737" class="contact-link">910781062</a></div>
         <div class="nombre-input">
             <label for="nombre">Por favor, ingrese su nombre:</label>
             <input type="text" id="nombre" placeholder="Nombre">
@@ -78,28 +117,28 @@
     </div>
 
     <script>
-       function redirigirWhatsApp() {
-    var nombreCliente = document.getElementById('nombre').value;
+        function redirigirWhatsApp() {
+            var nombreCliente = document.getElementById('nombre').value;
 
-    // Obtener información de la compra desde localStorage
-    var productosComprados = localStorage.getItem('productosComprados') || "";
-    var precios = localStorage.getItem('precios') || "";
-    var precioTotal = localStorage.getItem('precioTotal') || "0.00";
+            // Obtener información de la compra desde localStorage
+            var productosComprados = localStorage.getItem('productosComprados') || "";
+            var precios = localStorage.getItem('precios') || "";
+            var precioTotal = localStorage.getItem('precioTotal') || "0.00";
 
-    // Validar que haya productos antes de redirigir
-    if (productosComprados.trim() === "") {
-        alert("No hay productos en la compra.");
-        return;
-    }
+            // Validar que haya productos antes de redirigir
+            if (productosComprados.trim() === "") {
+                alert("No hay productos en la compra.");
+                return;
+            }
 
-    // Crear mensaje personalizado
-    var mensaje = `Hola, soy ${nombreCliente}. He realizado una compra de los siguientes productos:\n\n${productosComprados}\nPrecios:\n${precios}\nTotal: S/${precioTotal}`;
+            // Crear mensaje personalizado
+            var mensaje = `Hola, soy ${nombreCliente}. He realizado una compra de los siguientes productos:\n\n${productosComprados}\nPrecios:\n${precios}\nTotal: S/${precioTotal}`;
 
-    // Redirige a wa.me con el mensaje predefinido
-    var numeroWhatsApp = '+51927904737';
-    var urlAPIWhatsApp = 'https://wa.me/' + numeroWhatsApp + '?text=' + encodeURIComponent(mensaje);
-    window.location.href = urlAPIWhatsApp;
-}
+            // Redirige a wa.me con el mensaje predefinido
+            var numeroWhatsApp = '+51927904737';
+            var urlAPIWhatsApp = 'https://wa.me/' + numeroWhatsApp + '?text=' + encodeURIComponent(mensaje);
+            window.location.href = urlAPIWhatsApp;
+        }
     </script>
 </body>
 </html>
