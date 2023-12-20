@@ -9,11 +9,37 @@
     <script src="app.js" async></script>
     <title>Tienda de Frutas Y Verduras | </title>
     <style>/* Agrega estilos para resaltar el título */
+/* Estilos mejorados para el título de la página */
 header h1 {
-    font-size: 45px; /* Tamaño más grande */
+    font-size: 60px; /* Tamaño más grande */
     color: #28a745; /* Color verde para resaltar */
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Sombra suave para destacar el texto */
+    margin-bottom: 10px; /* Añade espacio en la parte inferior */
 }
+
+/* Efecto de desplazamiento al pasar el mouse sobre el título */
+header h1:hover {
+    transform: scale(1.05); /* Efecto de escala para resaltar al pasar el mouse */
+    transition: transform 0.3s ease; /* Transición suave */
+}
+
+/* Agrega una línea de separación debajo del título para un aspecto más elegante */
+header h1::after {
+    content: "";
+    display: block;
+    width: 50px; /* Longitud de la línea */
+    height: 3px; /* Grosor de la línea */
+    background-color: #28a745; /* Color verde */
+    margin: 10px auto; /* Espaciado alrededor de la línea */
+}
+
+/* Ajustes adicionales para dispositivos móviles */
+@media screen and (max-width: 768px) {
+    header h1 {
+        font-size: 40px; /* Reduce el tamaño del título en dispositivos móviles */
+    }
+}
+
 
 /* Agrega un efecto de desplazamiento suave para las transiciones */
 .container, .carrito {
